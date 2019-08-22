@@ -49,7 +49,9 @@ steps:
 
 - bash: |
     source activate interp
+    cd ./python
     twine upload -r $(artifactFeed) --config-file $(PYPIRC_PATH) dist/*
+    cd ..
   displayName: Publish artifacts
 
 - bash: |
