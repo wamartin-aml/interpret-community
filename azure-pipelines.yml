@@ -4,6 +4,9 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  artifactFeed: interpret-extensions-feed
+
 steps:
 - bash: echo "##vso[task.prependpath]$CONDA/bin"
   displayName: Add conda to PATH
@@ -30,6 +33,22 @@ steps:
     source activate interp
     pip install -e ./python
   displayName: Install interpret-extensions
+
+- bash: |
+    source activate interp
+    pip install --upgrade setuptools wheel twine
+    python ./python/setup.py bdist_wheel
+  displayName: Create a wheel
+
+- task: TwineAuthenticate@0
+  displayName: Configure twine authentication
+  inputs:
+    artifactFeeds: $(artifactFeed)
+
+- bash: |
+    source activate interp
+    twine upload -r $(artifactFeed) dist/*
+  displayName: Publish artifacts
 
 - bash: |
     source activate interp
