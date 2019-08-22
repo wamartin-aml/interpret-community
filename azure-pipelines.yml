@@ -37,7 +37,9 @@ steps:
 - bash: |
     source activate interp
     pip install --upgrade setuptools wheel twine
-    python ./python/setup.py bdist_wheel
+    cd ./python
+    python setup.py bdist_wheel
+    cd ..
   displayName: Create a wheel
 
 - task: TwineAuthenticate@0
