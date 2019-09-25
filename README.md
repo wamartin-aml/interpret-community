@@ -32,53 +32,77 @@ This repository contains examples and best practices to use tools to assist in i
 
 To setup on your local machine:
 
-1. Install Anaconda with Python >= 3.6. [Miniconda](https://conda.io/miniconda.html) is a quick way to get started.
+<details>
 
-2. Clone the repository 
-```
-git clone https://github.com/Microsoft/Recommenders
-```
+<summary><strong><em>1. Set up Anaconda</em></strong></summary>
 
-3. Create conda environment
+a. Install Anaconda with Python >= 3.6. [Miniconda](https://conda.io/miniconda.html) is a quick way to get started.
+b. conda install nb_conda
+
+c. Create conda environment
 ```
 conda create -n interp python=3.6 anaconda
 
 ```
-4. Activate conda environment
+d. Activate conda environment
 ```
 conda activate interp
 or
 activate interp
 ```
+blabla
 
-5. Install Python module, package and necessary distributions
+</details>
 
-   from the root folder:
+<details>
+
+<summary><strong><em>2. Clone the interpret-community repo</em></strong></summary>
+
+a. Clone the repository 
+```
+git clone https://github.com/Microsoft/Recommenders
+```
+</details>
+
+<details>
+<summary><strong><em>3. Install Python module, packages and necessary distributions</em></strong></summary>
+
+
+from the root folder:
 ```
 python/pip install -e . 
 ```
-6. Install additional packages for tests and more
+a. Install additional packages for tests and more
 ```
 pip install -r requirements.txt
 ```
-7. Install scikit-learn
+b. Install scikit-learn
 ```
 pip install sklearn
 ```
-8. Set up and run Jupyter Notebook
+</details>
+
+<details>
+<summary><strong><em>3. Set up and run Jupyter Notebook server </em></strong></summary>
+
+a. Set up and run Jupyter Notebook
 ```
 activate interp
-conda install nb_conda
 pip install interpret
 pip install jupyter
 jupyter notebook
 ```
+</details>
+
 <!---{% from interpret.ext.blackbox import TabularExplainer %}
 --->
 
 # Models
 
 # bz this section requires rewording
+Add ref to
+https://docs.microsoft.com/en-us/python/api/azureml-explain-model/azureml.explain.model?view=azure-ml-py
+
 * The API supports both dense (numpy or pandas) and sparse (scipy) datasets
 (verify?)
 * For more advanced users, individual explainers can be used
