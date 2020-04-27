@@ -16,7 +16,7 @@ from abc import ABCMeta, abstractmethod
 from shap.common import DenseData
 from interpret.utils import gen_local_selector, gen_global_selector, gen_name_from_class, perf_dict
 
-from ..common.explanation_utils import _sort_values, _order_imp
+from ..common.explanation_utils import _sort_values, _order_imp, _sort_feature_list_multiclass
 from ..common.constants import Dynamic, ExplainParams, ExplanationParams, \
     ExplainType, ModelTask, Defaults, InterpretData
 from ..dataset.dataset_wrapper import DatasetWrapper
@@ -1068,7 +1068,15 @@ class PerClassMixin(ClassesMixin):
         :rtype: list[list[str]] or list[list[int]]
         """
         if self._ranked_per_class_names is None and self._features is not None:
-            self._ranked_per_class_names = _sort_values(self._features, self._per_class_rank)
+            if hasattr(self._per_class_rank, 'tolist'):
+                print('has attr')
+                self._ranked_per_class_names = _sort_values(self._features, self._per_class_rank)
+            else:
+                print('not has attr')
+                self._ranked_per_class_names = _sort_feature_list_multiclass(self._features, self._per_class_rank.tolist())
+        print(type(self._ranked_per_class_names))
+        print(type(self._ranked_per_class_names[0]))
+        print(type(self._ranked_per_class_names[0][0]))
 
         if self._ranked_per_class_names is not None:
             ranked_per_class_names = self._ranked_per_class_names
@@ -1077,7 +1085,19 @@ class PerClassMixin(ClassesMixin):
 
         if top_k is not None:
             ranked_per_class_names = ranked_per_class_names[:, :top_k]
-        return ranked_per_class_names.tolist()
+        if hasattr(ranked_per_class_names, 'tolist'):
+            ranked_per_class_names = ranked_per_class_names.tolist()
+            print('doing conversion')
+            print(type(ranked_per_class_names))
+            print(type(ranked_per_class_names[0]))
+            print(type(ranked_per_class_names[0][0]))
+            return ranked_per_class_names
+        else:
+            print('not doing conversion')
+            print(type(ranked_per_class_names))
+            print(type(ranked_per_class_names[0]))
+            print(type(ranked_per_class_names[0][0]))
+            return ranked_per_class_names
 
     def get_ranked_per_class_values(self, top_k=None):
         """Get per class feature importance sorted from highest to lowest.
