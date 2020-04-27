@@ -1073,7 +1073,7 @@ class PerClassMixin(ClassesMixin):
                 self._ranked_per_class_names = _sort_values(self._features, self._per_class_rank)
             else:
                 print('not has attr')
-                self._ranked_per_class_names = _sort_feature_list_multiclass(self._features, self._per_class_rank.tolist())
+                self._ranked_per_class_names = _sort_feature_list_multiclass(self._features, self._per_class_rank)
         print(type(self._ranked_per_class_names))
         print(type(self._ranked_per_class_names[0]))
         print(type(self._ranked_per_class_names[0][0]))
