@@ -1069,14 +1069,10 @@ class PerClassMixin(ClassesMixin):
         """
         if self._ranked_per_class_names is None and self._features is not None:
             if hasattr(self._per_class_rank, 'tolist'):
-                print('has attr')
                 self._ranked_per_class_names = _sort_values(self._features, self._per_class_rank)
             else:
-                print('not has attr')
-                self._ranked_per_class_names = _sort_feature_list_multiclass(self._features, self._per_class_rank)
-        print(type(self._ranked_per_class_names))
-        print(type(self._ranked_per_class_names[0]))
-        print(type(self._ranked_per_class_names[0][0]))
+                features = self._features.tolist() if hasattr(self._features, 'tolist') else self._features
+                self._ranked_per_class_names = _sort_feature_list_multiclass(features, self._per_class_rank)
 
         if self._ranked_per_class_names is not None:
             ranked_per_class_names = self._ranked_per_class_names
@@ -1087,16 +1083,8 @@ class PerClassMixin(ClassesMixin):
             ranked_per_class_names = ranked_per_class_names[:, :top_k]
         if hasattr(ranked_per_class_names, 'tolist'):
             ranked_per_class_names = ranked_per_class_names.tolist()
-            print('doing conversion')
-            print(type(ranked_per_class_names))
-            print(type(ranked_per_class_names[0]))
-            print(type(ranked_per_class_names[0][0]))
             return ranked_per_class_names
         else:
-            print('not doing conversion')
-            print(type(ranked_per_class_names))
-            print(type(ranked_per_class_names[0]))
-            print(type(ranked_per_class_names[0][0]))
             return ranked_per_class_names
 
     def get_ranked_per_class_values(self, top_k=None):
