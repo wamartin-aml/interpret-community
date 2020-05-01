@@ -648,7 +648,10 @@ class GlobalExplanation(FeatureImportanceExplanation):
         :return: The feature indexes sorted by importance.
         :rtype: list[int]
         """
-        return self._global_importance_rank.tolist()
+        if hasattr(self._global_importance_rank, 'tolist'):
+            return self._global_importance_rank.tolist()
+        else:
+            return self._global_importance_rank
 
     def get_ranked_global_names(self, top_k=None):
         """Get feature names sorted by global feature importance values, highest to lowest.
@@ -668,7 +671,10 @@ class GlobalExplanation(FeatureImportanceExplanation):
 
         if top_k is not None:
             return ranked_global_names[:top_k].tolist()
-        return ranked_global_names.tolist()
+        if hasattr(ranked_global_names, 'tolist'):
+            return ranked_global_names.tolist()
+        else:
+            return ranked_global_names
 
     def get_ranked_global_values(self, top_k=None):
         """Get global feature importance sorted from highest to lowest.
